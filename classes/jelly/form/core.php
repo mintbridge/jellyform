@@ -35,6 +35,11 @@ abstract class Jelly_Form_Core
 	/**
 	 * @var  array  
 	 */
+	private $_config = array();
+	
+	/**
+	 * @var  array  
+	 */
 	private $_properties = array();
 	
 	/**
@@ -50,9 +55,9 @@ abstract class Jelly_Form_Core
 	 * @return void
 	 * 
 	 **/
-	public static function factory($action = NULL, array $properties = NULL) 
+	public static function factory($config = NULL) 
 	{
-		return new Jelly_Form($action, $properties);
+		return new Jelly_Form($config);
 	}
 
 	/**
@@ -63,10 +68,11 @@ abstract class Jelly_Form_Core
 	 * @param  name  $values
 	 * @param  array  $properties
 	 **/
-	final protected function __construct($action = NULL, array $properties = NULL)
+	final protected function __construct($config = NULL)
 	{
 		$this->_properties = (array) get_object_vars($this);
-		if(is_array($properties))
+		// Load configuration
+		if($properties = Kohana::config($config))
 		{
 			foreach($properties as $key => $value)
 			{
