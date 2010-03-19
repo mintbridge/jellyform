@@ -8,19 +8,29 @@
 abstract class Jelly_Form_Core
 {
 	/**
-	 * @var  array  Form instances
-	 */
-	public static $instances = array();
-	
-	/**
 	 * @var  string Form action   
 	 */
-	private $action = '';
+	protected $action = '';
 	
 	/**
 	 * @var  string Form method   
 	 */
-	private $method = 'POST';
+	protected $method = 'POST';
+	
+	/**
+	 * @var  array  
+	 */
+	protected $models = array();
+	
+	/**
+	 * @var  array  
+	 */
+	protected $elements = array();
+	
+	/**
+	 * @var  array  
+	 */
+	protected $errors = array();
 	
 	/**
 	 * @var  array  
@@ -28,42 +38,21 @@ abstract class Jelly_Form_Core
 	private $_properties = array();
 	
 	/**
-	 * @var  array  
-	 */
-	private $_models = array();
-	
-	/**
-	 * @var  array  
-	 */
-	private $elements = array();
-	
-	/**
-	 * @var  array  
-	 */
-	private $_errors = array();
-	
-	/**
 	 * @var  string  
 	 */
 	private $_view = 'form/form';
 	
 	/**
-	 * Get a singleton Database instance. If configuration is not specified,
-	 * it will be loaded from the database configuration file using the same
-	 * group as the name.
+	 * factory
 	 *
-	 * @param   string   instance name
-	 * @param   array    configuration parameters
-	 * @return  Database
-	 */
-	public static function instance($name, array $properties = NULL)
+	 * @access public
+	 * @param  void	
+	 * @return void
+	 * 
+	 **/
+	public static function factory($action = NULL, array $properties = NULL) 
 	{
-		if ( ! isset(Jelly_Form::$instances[$name]))
-		{
-			new Jelly_Form($name, $properties);
-		}
-
-		return Jelly_Form::$instances[$name];
+		return new Jelly_Form($action, $properties);
 	}
 
 	/**
@@ -74,11 +63,8 @@ abstract class Jelly_Form_Core
 	 * @param  name  $values
 	 * @param  array  $properties
 	 **/
-	final protected function __construct($name, array $properties = NULL)
+	final protected function __construct($action = NULL, array $properties = NULL)
 	{
-		// Set the instance name
-		$this->_instance = $name;
-
 		$this->_properties = (array) get_object_vars($this);
 		if(is_array($properties))
 		{
@@ -90,9 +76,6 @@ abstract class Jelly_Form_Core
 				}
 			}
 		}
-		
-		// Store the Jelly Form instance
-		Jelly_Form::$instances[$name] = $this;
 	}
 	
 	/**
@@ -212,6 +195,40 @@ abstract class Jelly_Form_Core
 		}
 		
 		return $this->elements;
+	}
+	
+	/**
+	 * Models
+	 *
+	 * To do
+	 *
+	 * @param   mixed  $element  
+	 * @return  mixed
+	 */
+	public function models($model = NULL)
+	{
+		if (func_num_args() == 0)
+		{
+			return $this->models;
+		}
+
+		if (is_array($model))
+		{
+			// Allows fields to be appended
+			$this->models += $model;
+			return $this;
+		}
+		
+		if(is_string($model))
+		{
+			if(array_key_exists($model, $this->models))
+			{
+				return $this->models[$model];
+			}
+			return FALSE;
+		}
+		
+		return $this->models;
 	}
 	
 	/**
