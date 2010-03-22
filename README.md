@@ -1,51 +1,47 @@
-JellyForm is a form building module for Jelly. It is currently in development and will change
+JellyForm is a form building module for Jelly. It is currently in development and will change.
+
+Currently there is only 2 fields types, Input (text) and Textarea but others will be added shortly
 
 Example Usage
 
-At the moment you need to pass the elements when creating the for instance but im planning on allowing them to be loaded from a config file, and also added in parts by using elements()
-
 <pre>
-$form = Jelly_Form::instance('form/instance', array(
-			'action' => 'controller/action',						   
-			'elements' => array(
-				'first_field' => new Jelly_Form_Field(array(
-					'label' => 'First Field',
-					'type' => 'text',
-					'default' => '',
-				)),
-				'fieldset_one' => new Jelly_Form_Fieldset(array(
-					'legend' => 'Im a legend',
-					'elements' => array(
-						'name' => new Jelly_Form_Field(array(
-							'label' => 'Name',
-							'type' => 'string',
-							'class' => 'medium',
-							'default' => '',
-						)),
-						'description' => new Jelly_Form_Field(array(
-							'label' => 'Description',
-							'type' => 'text',
-							'default' => '',
-						)),
-						'second_fieldset' => new Jelly_Form_Fieldset(array(
-							'legend' => '',
-							'elements' => array(
-								'phone' => new Jelly_Form_Field(array(
-									'label' => 'Phone',
-									'type' => 'string',
-									'default' => '',
-								)),
-								'email' => new Jelly_Form_Field(array(
-									'label' => 'Email',
-									'type' => 'string',
-									'default' => '',
-								)),
-							)
-						)),
-					)
-				)),
-			),
+class Form_Example extends Jelly_form {
+
+	function initialize()
+	{
+		$this->set('action', 'action')
+		->elements(array(
+			'model.field1' => new Jelly_Form_Input(array(
+				'label' => 'Name',
+			)),
+			'model.field2' => new Jelly_Form_Text(array(
+				'label' => 'Description',
+			)),
+			'fieldset' => new Jelly_Form_Fieldset(array(
+				'legend' => 'Im a legend',
+				'elements' => array(
+					'anothermodel.field1' => new Jelly_Form_Input(array(
+						'label' => 'Label1',
+						'class' => 'large',
+					)),
+					'anothermodel.field2' => new Jelly_Form_Input(array(
+						'label' => 'Another Label',
+					)),
+					'anothermodel.field3' => new Jelly_Form_Input(array(
+						'label' => 'Blah',
+					)),
+					'anothermodel.field4' => new Jelly_Form_Input(array(
+						'label' => 'Foooooo',
+					)),
+					'anothermodel.field5' => new Jelly_Form_Input(array(
+						'label' => 'Label5',
+					)),
+				),
+			)),
 		));
+	}
+}
+
 </pre>
 
 Then to display the form in your view just use 
@@ -62,4 +58,12 @@ echo $form->elements('fieldset_one');
 or just show the email field
 <pre>
 echo $form->elements('fieldset_one')->elements('email');
+</pre>
+
+or loop trhough a set of elements
+<pre>
+foreach($form->elements('fieldset_one')->elements() as $element)
+{
+	echo $element;
+}
 </pre>
