@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Jelly_Form_Field_Timestamp extends Jelly_Form_Field_Input
+class Jelly_Form_Field_Timestamp extends Jelly_Form_Input
 {
 	/**
 	 * @var  string 
