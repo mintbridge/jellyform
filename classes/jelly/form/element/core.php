@@ -104,10 +104,7 @@ abstract class Jelly_Form_Element_Core
 		{
 			foreach($attributes as $attribute => $value) 
 			{
-				if(!in_array($attribute, array('name', 'value')))
-				{
-					$this->set($attribute, $value);
-				}
+				$this->set($attribute, $value);
 			}
 		}
 	}
