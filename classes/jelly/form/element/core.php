@@ -8,6 +8,13 @@
 abstract class Jelly_Form_Element_Core
 {
 	/**
+	 * @var  array  
+	 *
+	 * Specifies the attributes values that have been set 
+	 */
+	protected $attributes = array();
+	
+	/**
 	 * @var  string  
 	 *
 	 * Specifies a unique id for an element
@@ -205,6 +212,42 @@ abstract class Jelly_Form_Element_Core
 	}
 
 	/**
+	 * attibrutes
+	 *
+	 * return an arrya of attributes set for the element
+	 *
+	 * @return  array
+	 */
+	public function attributes()
+	{
+		$_attributes = $this->_attributes;
+		$_required = $this->_required;
+		
+		$attributes = array();
+		foreach($_attributes as $_attribute => $value)
+		{
+			//we dont want to include the attributes property in the attributes array!
+			if($_attribute == 'attributes')
+			{
+				continue;
+			}
+			if(!in_array($_attribute, $_required))
+			{
+				//if the property is an array then pick the first value from the array
+				if(is_array($this->{$_attribute}) && count($this->{$_attribute})> 0)
+				{
+					$attributes[$_attribute] = $this->{$_attribute}[0];
+				}
+				elseif($this->{$_attribute} != '')
+				{
+					$attributes[$_attribute] = $this->{$_attribute};
+				}
+			}
+		}
+		return (array) $attributes;
+	}
+	
+	/**
 	 * Fieldsets
 	 *
 	 * Desc
@@ -217,30 +260,15 @@ abstract class Jelly_Form_Element_Core
 		try
 		{
 			$view = View::factory($this->_view);
+			$_required = $this->_required;
 			
-			$attributes = $this->_attributes;
-			$required = $this->_required;
-			$data = array();
+			$attributes = $this->attributes();
 			
-			foreach($attributes as $attribute => $value)
+			$view->bind('attributes', $attributes);
+			
+			foreach($_required as $var)
 			{
-				if(!in_array($attribute, $required))
-				{
-					if(is_array($this->{$attribute}))
-					{
-						$data[$attribute] = $this->{$attribute}[0];
-					}
-					elseif($this->{$attribute} != '')
-					{
-						$data[$attribute] = $this->{$attribute};
-					}
-				}
-			}
-			$view->bind('attributes', $data);
-			
-			foreach($required as $attribute)
-			{
-				$view->bind(''.$attribute, $this->{$attribute});
+				$view->bind(''.$var, $this->{$var});
 			}			
 			return $view->render();
 		}
