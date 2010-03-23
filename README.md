@@ -54,7 +54,13 @@ class Form_Example extends Jelly_form {
 		));
 	}
 }
+</pre>
 
+Controller
+<pre>
+$example = Jelly::select('example', 1);
+
+$form = new Form_Example(array('action'=>'test', 'models'=>array('example' => $example)));
 </pre>
 
 Then to display the form in your view just use 
