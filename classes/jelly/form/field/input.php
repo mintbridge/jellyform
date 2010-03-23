@@ -84,7 +84,7 @@ class Jelly_Form_Field_Input extends Jelly_Form_Field {
 	 *
 	 * Specifies the type of an input element
 	 */
-	protected $type = array('button', 'checkbox', 'file', 'hidden', 'image', 'password', 'radio', 'reset', 'submit', 'text');
+	protected $type = array('text', 'button', 'checkbox', 'file', 'hidden', 'image', 'password', 'radio', 'reset', 'submit');
 	
 	/**
 	 * @var  string  
@@ -98,6 +98,6 @@ class Jelly_Form_Field_Input extends Jelly_Form_Field {
 	 *
 	 * Specifies the value of an input element
 	 */
-	protected $_required = array('name', 'value', 'label');
+	protected $_required = array('type' ,'name', 'value', 'label');
 
 }

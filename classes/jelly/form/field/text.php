@@ -46,6 +46,13 @@ class Jelly_Form_Field_Text extends Jelly_Form_Field {
 	
 	/**
 	 * @var  string  
+	 *
+	 * Specifies the tab order of an element
+	 */
+	protected $type = 'text';
+	
+	/**
+	 * @var  string  
 	 */
 	protected $_view = 'jelly/form/field/text';
 	
