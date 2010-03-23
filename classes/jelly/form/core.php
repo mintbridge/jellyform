@@ -88,7 +88,7 @@ abstract class Jelly_Form_Core extends Jelly_Form_Element
 			{
 				return $this->elements[$element];
 			}
-			return FALSE;
+			return array();
 		}
 		
 		return $this->elements;
