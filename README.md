@@ -1,6 +1,15 @@
 JellyForm is a form building module for Jelly. It is currently in development and will change.
 
-Currently there is only 2 fields types, Input (text) and Textarea but others will be added shortly
+Currently there are only a few fields types but others will be added shortly.
+
+Its possible to pass models to the form, that can be used to set the value of a field, the field definition should include a models propety that specifies the model and field to use eg 
+<pre>
+'model.field1' => new Jelly_Form_String(array(
+	'label' => 'Name',
+	'model' => 'modelname.fieldname',
+)),
+</pre>
+This is still under development, so currently only the field value gets set. Other values such as labels, rules, etc will also be possible soon.
 
 Example Usage
 
