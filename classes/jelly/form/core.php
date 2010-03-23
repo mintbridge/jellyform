@@ -64,6 +64,11 @@ abstract class Jelly_Form_Core extends Jelly_Form_Element
 	/**
 	 * @var  array  
 	 */
+	protected $_models = array();
+	
+	/**
+	 * @var  array  
+	 */
 	protected $_required = array('action', 'elements');
 	
 	/**
@@ -95,6 +100,34 @@ abstract class Jelly_Form_Core extends Jelly_Form_Element
 	}
 	
 	/**
+	 * Elements
+	 *
+	 * To do
+	 *
+	 * @param   mixed  $element  
+	 * @return  mixed
+	 */
+	public function models($models = NULL)
+	{
+		if (is_array($models))
+		{
+			$this->_models += $models;
+			return $this;
+		}
+		
+		if(is_string($models))
+		{
+			if(array_key_exists($models, $this->_models))
+			{
+				return $this->_models[$models];
+			}
+			return array();
+		}
+		
+		return $this->_models;
+	}
+	
+	/**
 	 * Remove
 	 *
 	 * Remove elements from the elements array 
@@ -116,6 +149,43 @@ abstract class Jelly_Form_Core extends Jelly_Form_Element
 			if(array_key_exists($elements, $this->elements))
 			{
 				unset($this->elements[$elements]);
+			}
+		}
+		return $this;
+	}
+	
+	public function process($elements = NULL)
+	{
+		if(is_null($elements)) 
+		{
+			$elements = $this->elements;
+		}
+		$models = $this->models();
+		
+		if(is_array($elements)) 
+		{
+			foreach($elements as $key=>$element)
+			{
+				if($element instanceof Jelly_Form_Fieldset)
+				{
+					$this->process($element->elements());
+				}
+				elseif($element instanceof Jelly_Form_Field)
+				{
+					if($element->model != '')
+					{
+						list($model, $field) = explode('.', $element->model );
+						if(is_array($models) and array_key_exists($model, $models)) 
+						{
+							$element->value = $models[$model]->{$field};
+							$element->name = $field;
+						}
+						else
+						{
+							//we could autoload in models?
+						}
+					}
+				}
 			}
 		}
 		return $this;

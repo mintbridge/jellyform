@@ -114,6 +114,11 @@ abstract class Jelly_Form_Element_Core
 				$this->set($attribute, $value);
 			}
 		}
+		
+		if(method_exists($this, 'process'))
+		{
+			$this->process();
+		}
 	}
 	
 	/**
@@ -266,7 +271,7 @@ abstract class Jelly_Form_Element_Core
 			
 			$view->bind('attributes', $attributes);
 			
-			foreach($_required as $var)
+			foreach($_required as $default => $var)
 			{
 				$view->bind(''.$var, $this->{$var});
 			}			

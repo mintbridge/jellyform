@@ -20,9 +20,25 @@ abstract class Jelly_Form_Field_Core extends Jelly_Form_Element
 	protected $value = '';
 	
 	/**
+	 * @var  string  
+	 */
+	protected $_model = '';
+	
+	/**
 	 * @var  array  
 	 *
 	 * Specifies the attributes view requires to be set
 	 */
 	protected $_required = array('name', 'value');
+	
+	public function model($model = NULL)
+	{		
+		if(is_string($model))
+		{
+			$this->_model = $model;
+			return $this;
+		}
+		
+		return $this->_model;
+	}
 }
