@@ -196,7 +196,7 @@ abstract class Jelly_Form_Element_Core
 		}
 		if(array_key_exists($attribute, $this->_attributes))
 		{	
-			if(is_array($this->_attributes[$attribute]))
+			if(is_array($this->_attributes[$attribute]) and !is_array($value))
 			{
 				if(in_array($value, $this->_attributes[$attribute]))
 				{
