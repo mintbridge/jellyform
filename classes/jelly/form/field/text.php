@@ -53,11 +53,15 @@ class Jelly_Form_Field_Text extends Jelly_Form_Field {
 	
 	/**
 	 * @var  string  
+	 *
+	 * Name of the view to be rendered
 	 */
 	protected $_view = 'jelly/form/field/text';
 	
 	/**
 	 * @var  array  
+	 *
+	 * Specifies the attributes view requires to be set
 	 */
 	protected $_required = array('name', 'value', 'label');
 
