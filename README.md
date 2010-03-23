@@ -11,7 +11,7 @@ class Form_Example extends Jelly_form {
 	{
 		$this->set('action', 'action')
 		->elements(array(
-			'model.field1' => new Jelly_Form_Input(array(
+			'model.field1' => new Jelly_Form_String(array(
 				'label' => 'Name',
 			)),
 			'model.field2' => new Jelly_Form_Text(array(
@@ -20,21 +20,25 @@ class Form_Example extends Jelly_form {
 			'fieldset' => new Jelly_Form_Fieldset(array(
 				'legend' => 'Im a legend',
 				'elements' => array(
-					'anothermodel.field1' => new Jelly_Form_Input(array(
+					'anothermodel.field1' => new Jelly_Form_Email(array(
 						'label' => 'Label1',
 						'class' => 'large',
 					)),
-					'anothermodel.field2' => new Jelly_Form_Input(array(
+					'anothermodel.field2' => new Jelly_Form_String(array(
 						'label' => 'Another Label',
 					)),
-					'anothermodel.field3' => new Jelly_Form_Input(array(
+					'anothermodel.field3' => new Jelly_Form_Enum(array(
 						'label' => 'Blah',
+						'options' => array(
+							'1' => 'Option 1', 
+							'2' => 'Option 2',		
+						),
 					)),
-					'anothermodel.field4' => new Jelly_Form_Input(array(
+					'anothermodel.field4' => new Jelly_Form_String(array(
 						'label' => 'Foooooo',
 					)),
-					'anothermodel.field5' => new Jelly_Form_Input(array(
-						'label' => 'Label5',
+					'anothermodel.field5' => new Jelly_Form_Password(array(
+						'label' => 'Password',
 					)),
 				),
 			)),
